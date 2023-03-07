@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<head>
+<script
+src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href='https://fonts.googleapis.com/css2?family=Comfortaa' rel='stylesheet' type='text/css'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet">
+<title>Ryan's Emporium</title>
+<style>
+	input {
+		font-size: 22px;
+	}
+
+body {
+  font-family: 'Play', sans-serif;
+  margin: 0 auto;
+  max-width: 600px;
+  background: #6495ED;
+}
+div {
+  height: 300px;
+  background-size: 100% 100%;
+  position: relative;
+  margin: 40px 0 0 0;
+  border-radius: 12px;
+}
+h1 {
+	
+  font-family: 'Comfortaa', cursive;
+  text-align: center;
+  font-size: 75px;
+  color: #FFF;
+  margin: 60px 0 0 0;
+}
+h2 {
+  text-align: center;
+  color: rgba(255,255,0);
+  margin: 0px 0 70px 0;
+}
+p {
+  color: rgba(40, 83, 224);
+  background: black;
+  background: linear-gradient(bottom, rgba(57,03,30,5), rgba(2,5,56,.26));
+  background: -webkit-linear-gradient(bottom, rgba(240,248,255), rgba(0,0,0,.2));
+  background: -moz-linear-gradient(bottom, rgba(0,0,0,45), rgba(0,0,0,.2));
+  padding: 10px;
+  line-height: 28px;
+  text-align: justify;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  height: 30px;
+  transition: height .5s;
+  -webkit-transition: height .5s;
+  -moz-transition: height .5s;
+}
+
+small {
+  opacity: 0;
+}
+
+.show-description p {
+  height: 150px;
+}
+
+.show-description small {
+  opacity: 1;
+}
+
+.first{
+  background-image: url(https://www.foodnetwork.com/content/dam/images/food/fullset/2015/4/8/4/WU1004H_Chicken-Nuggets_s4x3.jpg);
+}
+.second{
+  background-image: url("https://i.kym-cdn.com/entries/icons/original/000/021/521/DumpsterFire2.jpg");
+}
+.dessert{
+  background-image: url(https://thumbs.dreamstime.com/b/ohio-state-outline-map-130697478.jpg);
+}
+.price {
+  float: right;
+}
+@media (max-width: 500px) {
+  h1 {
+    font-size: 50px;
+    margin-top: 20px;
+    line-height: 40px;
+  }
+  h2 {
+    font-size: 20px;
+    margin: 20px 0 30px 0;
+  }
+  div {
+    margin: 20px 12px 0 12px;
+  }
+  p {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  small {
+    font-size: 16px;
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+<h1> Ryan's Emporium</h1>
+<h2>a New York City "restaurant" (maybe)</h2>
+<div class="first">
+	<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Edible Food <span class="price">$35</span><br />
+  <small>Chicken Nuggets and a bottled water. The best and most gourmet meals of them all. A true dish of the decade. </small></p>
+</div>
+<div class="second">
+	<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Trash From The Alleyway? <span class="price">$4</span><br />
+  <small>Trashcan sludge and other questionable food options. I mean, it used to be food, just in a more later age. Definetly some gourmet meals you would find in Ohio, Cleveland, the Bronx, Baltimore, Detroit, Skid Row and anywhere in Florida!</small></p>
+</div> 
+<div class="dessert">
+	<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Overpriced and Unedible <span class="price">$69,420</span><br />
+  <small>Caviar I guess. Just put some gold on a food item an call it a day. Honestly, I don't understand why you would even buy this. </small></p>
+</div>
+<br><br>
+  <input id="NameBox" placeholder="Your name">
+  <input id="EmailBox" type="email" placeholder="Credit Card Information">
+  <input id="SubmitButton" type="submit"> 
+<br><br>
+
+<script>
+  $('div').on('click', function() {
+      $(this).toggleClass('show-description');
+  });
+</script>
+	
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+	import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyC5vMdVi8h6BM7hD9tGprS_folPjYaaacM",
+    authDomain: "fbryanh-7b626.firebaseapp.com",
+    projectId: "fbryanh-7b626",
+    storageBucket: "fbryanh-7b626.appspot.com",
+    messagingSenderId: "660788782253",
+    appId: "1:660788782253:web:ff346df5aa2f4311699224"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+	const db = getDatabase(app);
+	
+const Name = document.querySelector("#NameBox") 
+const Email = document.querySelector("#EmailBox")
+document.querySelector('#SubmitButton').addEventListener('click', Submit)
+const quantities = document.querySelectorAll(".quantities") 
+const itemsList = ["edible", "trash", "ohio"]
+const prices = document.querySelectorAll(".price") 
+
+	function Submit() {
+		  const timestamp = buildTimestamp()
+		
+		let total = 0
+	  let cart = { }
+	  for  (let i=0; i<quantities.length; i=i+1) {
+	  	if (quantities[i].value != "0" && quantities[i].value != "") {	
+			  let price = prices[i].innerHTML.replace('$', '')
+				price = price.replace(',', '')
+			  total = total + quantities[i].value * price 
+	  		cart[itemsList[i]] = parseInt(quantities[i].value) 
+	  	}
+	  	quantities[i].value = ""
+	  }
+	  
+		  set(ref(db, timestamp), {
+			  Name: Name.value,
+		    email: Email.value,
+				cart: cart,
+				totalPrice: total,
+		  	paid: "not yet",
+				
+		  });
+
+		  Name.value = ""
+		  Email.value = ""
+		}
+		
+	function buildTimestamp() {
+
+			
+		  const now = new Date();
+		  let timestamp = now.getFullYear().toString() + "/";
+		  //const month = now.toLocaleString('default', { month: 'long' });
+
+		  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+		  month = month.toString()
+		  month = addLeadingZero(month)
+		  timestamp += month + "/"; 
+
+		  let date = now.getDate().toString()
+		  date = addLeadingZero(date)
+		  timestamp += date + "/";
+
+		  let hours = now.getHours().toString()
+		  hours = addLeadingZero(hours)
+		  timestamp += hours + ":";
+
+		  let minutes = now.getMinutes().toString()
+		  minutes = addLeadingZero(minutes)
+		  timestamp += minutes + ":";
+
+		  let seconds = now.getSeconds().toString()
+		  seconds = addLeadingZero(seconds)
+		  timestamp += seconds;
+  
+		  return timestamp
+		}
+	
+		function addLeadingZero(units) {
+			if (units.length < 2) { 
+				units = "0" + units
+			}
+			return units
+		}
+		
+
+	
+  $('div').on('click', function() {
+      $(this).toggleClass('show-description');
+  });
+</script>
+</body>
